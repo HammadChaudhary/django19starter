@@ -8,11 +8,17 @@ def post_create(request):
 	return HttpResponse("<h1>Create</h1>")
 
 def post_detail(request):
-	return HttpResponse("<h1>Detail</h1>")
+	my_context_data = {
+	"title": "Detail"
+	}
+	return render(request, "index.html", my_context_data)
 
 def post_list(request):
-	return render(request, "index.html", {})
-	# return HttpResponse("<h1>List</h1>")
+	# Namming convention for variable, context, context_data
+	my_context_data = {
+	"title": "List"
+	}
+	return render(request, "index.html", my_context_data)
 
 def post_update(request):
 	return HttpResponse("<h1>Update</h1>")
