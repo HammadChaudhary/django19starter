@@ -14,10 +14,18 @@ def post_detail(request):
 	return render(request, "index.html", my_context_data)
 
 def post_list(request):
-	# Namming convention for variable, context, context_data
-	my_context_data = {
-	"title": "List"
+	if request.user.is_authenticated():
+		# Namming convention for variable, context, context_data
+		my_context_data = {
+		"title": "My User List"
 	}
+	# return render(request, "index2.html", my_context_data)
+
+	else:
+		my_context_data = {
+		"title": "List"
+	}
+
 	return render(request, "index.html", my_context_data)
 
 def post_update(request):
