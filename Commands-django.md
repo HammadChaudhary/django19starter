@@ -17,4 +17,20 @@ python manage.py migrate
 #no migrates to apply
 python manage.py makemigrations
 python manage.py migrate
+
 python manage.py shell
+>>> from posts.models import Post
+>>> Post.object.all()
+>>> Post.objects.filter(title="cvz")
+>>> Post.objects.filter(title__icontains="cvz")
+>>> Post.objects.create(title='New Post', content='New Content')
+
+>>> queryset = Post.object.all()
+>>> for obj in queryset:
+...     print (obj.title)
+...     print (obj.content)
+...     print (obj.updated)
+...     print (obj.timestamp)
+...     print (obj.id)
+...     print (obj.pk)
+
