@@ -1,13 +1,32 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 
+from .forms import PostForm
 # Create your views here.
 # Function based views
 from .models import Post
 
 
 def post_create(request):
-	return HttpResponse("<h1>Create</h1>")
+	form = PostForm(request.POST or None)
+	if form.is_valid():
+		instance = form.save(commit=False)
+		print(form.cleaned_data.get("title"))
+		instance.save()
+
+# Bad Practice - Not recommended
+	if request.method == "POST":
+		print(request.POST.get("title"))
+		print(request.POST.get("content"))
+		# title = request.POST.get("title")
+		# content = request.POST.get("title")
+		# Post.objects.create(title=title)
+		# Post.objects.create(content=content)
+
+	my_context_data = {
+		"form": form,
+	}
+	return render(request, "post_form.html", my_context_data)
 
 def post_detail(request, id=None):
 	# instance = Post.objects.get(id=2)
@@ -27,7 +46,7 @@ def post_list(request):
 	# 	"object_list": queryset,
 	# 	"title": "User List"
 	# }
-	
+
 	if request.user.is_authenticated():
 		queryset = Post.objects.all()
 		# Namming convention for variable, context, context_data
