@@ -67,7 +67,7 @@ def post_list(request):
 		"title": "List"
 	}
 
-	return render(request, "index.html", my_context_data)
+	return render(request, "post_list.html", my_context_data)
 
 def post_update(request, id=None):
 

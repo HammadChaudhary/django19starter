@@ -1,11 +1,10 @@
-<!--DOCTYPE html -->
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Template</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block content %}
+
 <h1>{{ title }} Template is working</h1>
+
+<p>Parent Page</p>
 
 {% for obj in object_list %}
 <!-- <a href="/posts/{{ obj.id }}">{{ obj.title }}</a><br/> -->
@@ -18,6 +17,4 @@
 {{ obj.pk }}<br/><br/>
 {% endfor %}
 
-
-</body>
-</html>
+{% endblock content %}
