@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 
@@ -54,18 +55,32 @@ def post_list(request):
 	# }
 
 	if request.user.is_authenticated():
-		queryset = Post.objects.all()
-		# Namming convention for variable, context, context_data
-		my_context_data = {
+		queryset_list = Post.objects.all() #.order_by("-timestamp")
+	# Namming convention for variable, context, context_data
+
+	paginator = Paginator(queryset_list, 5) # Show 25 contacts per page
+	page_request_var = "abc"
+	page = request.GET.get(page_request_var)
+	try:
+		queryset = paginator.page(page)
+	except PageNotAnInteger:
+	# If page is not an integer, deliver first page.
+		queryset = paginator.page(1)
+	except EmptyPage:
+	# If page is out of range (e.g. 9999), deliver last page of results.
+		queryset = paginator.page(paginator.num_pages)
+
+	my_context_data = {
 		"object_list": queryset,
-		"title": "My List"
+		"title": "My List",
+		"page_request_var": page_request_var
 	}
 	# return render(request, "index2.html", my_context_data)
 
-	else:
-		my_context_data = {
-		"title": "List"
-	}
+	# else:
+	# 	my_context_data = {
+	# 	"title": "List"
+	# }
 
 	return render(request, "post_list.html", my_context_data)
 
