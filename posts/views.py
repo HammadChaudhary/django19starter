@@ -17,8 +17,8 @@ def post_create(request):
 		# Message Success
 		messages.success(request, "Successfully Created")
 		return HttpResponseRedirect(instance.get_absolute_url())
-	else:
-		messages.error(request, "Failed: Creation of Post")
+	# else:
+	# 	messages.error(request, "Failed: Creation of Post")
 
 # Bad Practice - Not recommended
 	# if request.method == "POST":
@@ -58,7 +58,7 @@ def post_list(request):
 		# Namming convention for variable, context, context_data
 		my_context_data = {
 		"object_list": queryset,
-		"title": "My User List"
+		"title": "My List"
 	}
 	# return render(request, "index2.html", my_context_data)
 
